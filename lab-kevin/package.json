@@ -1,0 +1,24 @@
+{
+  "name": "lab-kevin",
+  "version": "1.0.0",
+  "description": " lab 30 - Hash Table Data Structure - impliment a hash table with hash, get, set, and delete methocds.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --verbose -i"
+  },
+  "keywords": [
+    "hash",
+    "tabel",
+    "linked",
+    "list",
+    "node"
+  ],
+  "author": "Kevin Miller",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.4.2"
+  }
+}
