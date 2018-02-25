@@ -1,10 +1,10 @@
 'use strict';
 
-// import SLL from './link';
+const SLL = require('./link');
 
 const HashTable = module.exports = function(size=1024) {
   this.size = size;
-  this.memory = [...Array(this.size)]; // => [SLL, SLL, SLL]
+  this.memory = [...Array(this.size)].fill(new SLL());
 };
 
 HashTable.prototype.hashKey = function(key) {
@@ -13,21 +13,30 @@ HashTable.prototype.hashKey = function(key) {
 };
 
 HashTable.prototype.set = function(key, value) {
-  // Implement the collision detection and handle that through a SLL
-  // Stretch goal => Implement with buckets as binary trees
 
-  this.memory[this.hashKey(key)].insertEnd(value);
+  let bucket = this.hashKey(key);
+  this.memory[bucket].insertHead({'key': key, 'value': value});
 };
 
 HashTable.prototype.get = function(key) {
-  // Implement the lookup for your buckets and their respective data structures
-  return this.memory[this.hashKey(key)];
+  let curr = this.memory[this.hashKey(key)].head;
+  while (curr) {
+    if(curr.key === key) return curr;
+    curr = curr.next;
+  }
+  return null;
 };
 
 HashTable.prototype.remove = function(key) {
-  let address = this.hashKey(key);
+  let curr = this.memory[this.hashKey(key)].head;
+  let prev = null;
+  while (curr) {
+    if(curr.key === key) prev.next = curr.next;
+    prev = curr;
+    curr = curr.next;
+  }
 
-  return this.memory[address] ? delete this.memory[address] : new Error('Invalid Key.');
+  return null;
 };
 
-console.log(HashTable.remove);  
+console.log(HashTable.memory);  
