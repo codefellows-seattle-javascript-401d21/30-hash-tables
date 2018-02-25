@@ -4,6 +4,10 @@ const Sll = require('./sll');
 
 
 const HashTable = module.exports = function(size=1024) {
+  if(size <= 0){
+    throw new Error('Invalid size input');
+  }
+
   this.size = size;
   this.memory = [...Array(this.size)].fill(new Sll());
 }

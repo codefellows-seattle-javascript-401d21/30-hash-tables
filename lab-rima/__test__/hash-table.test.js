@@ -7,12 +7,24 @@ const HashTable = require('../lib/hash-table');
 describe('Hash table module', () => {
 
   describe('constructor', function(){
-    test('should create an instance of hash table', () => {
+    test('Deafult size value: should create an instance of hash table', () => {
       const hash_table = new HashTable();
 
       expect(hash_table.size).toEqual(1024);
       expect(hash_table.memory.length).toEqual(1024);
       expect(hash_table.memory[0] instanceof Sll).toEqual(true);
+    });
+
+    test('Custom size value: should create an instance of hash table', () => {
+      const hash_table = new HashTable(10);
+
+      expect(hash_table.size).toEqual(10);
+      expect(hash_table.memory.length).toEqual(10);
+      expect(hash_table.memory[0] instanceof Sll).toEqual(true);
+    });
+
+    test('Invalid size value: should create an instance of hash table', () => {
+      expect(() => new HashTable(0)).toThrow('Invalid size input');
     });
   });
 
@@ -29,14 +41,29 @@ describe('Hash table module', () => {
 
       expect(() => hash_table.hash(0)).toThrow('Invalid type of key');
     });
+
+    test('Invalid input: should throw an error with null', () => {
+      const hash_table = new HashTable();
+
+      expect(() => hash_table.hash(null)).toThrow('Invalid type of key');
+    });
   });
 
   describe('set function', function(){
-    test('Valid input: should store a value under key', () => {
+    test('Valid input: should store a value under key (no collision)', () => {
       const hash_table = new HashTable();
       hash_table.set('key', 'value');
 
       expect(hash_table.memory[hash_table.hash('key')].head.value).toEqual({'key': 'key', 'val': 'value'});
+    });
+
+    test('Valid input: should store a value under key (collision)', () => {
+      const hash_table = new HashTable();
+      hash_table.memory[329].insertHead({'key': 'test key', 'val': 'test val'});
+      hash_table.set('key', 'collision');
+
+      expect(hash_table.memory[329].head.value).toEqual({'key': 'key', 'val': 'collision'});
+      expect(hash_table.memory[329].head.next.value).toEqual({'key': 'test key', 'val': 'test val'});
     });
 
     test('Invalid input: should throw an error with an invalid type of key', () => {
