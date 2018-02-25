@@ -47,7 +47,6 @@ class SLL {
     return this;
   }
 
-
   remove(offset) {
     if ( !offset || typeof offset !== 'number' ) return null;
     let cur_node = this.head;

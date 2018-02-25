@@ -1,59 +1,72 @@
 'use strict';
 
-import SLL from './sll.js';
+const SLL = require('./sll.js');
+
+module.exports = 
 
 class HashTable {
   constructor(size=1024){
     this.size = size;
     this.buckets = [];
-    this.bucket = null;
-    this.hashIndex = null;
-    this.typeError = null;
+    this.bucket = null;  
   }
 
   hash(val){
     this.isTypeError(val);
-    if(this.typeError) return this.typeError;
     let hashBase = val;
     if(typeof val === 'string'){
       hashBase = val.split('').reduce((acc, cur) => acc + cur.charCodeAt(0), 0);
     } 
-    this.hashIndex = this.size % hashBase;
+    if (hashBase === 0) return hashBase;
+    return Math.floor(this.size % hashBase);
   }
 
   set(indexValue, value){
-    if(!indexValue && !value) return new Error('Type Error: expecting string or number');
+    if(indexValue === undefined || indexValue === null) return new Error('Type Error: expecting string or number');
     this.isTypeError(indexValue);
-    if(this.typeError) return this.typeError;
+   
+    if (!value) value = indexValue;
+    let hashIndex = this.hash(indexValue);
+    this.bucket = this.buckets[hashIndex];
 
-    if(!value) value = indexValue;
-    this.hash(indexValue);
-    this.bucket = this.buckets[this.hashIndex];
-    if (!this.bucket) this.bucket = this.buckets[this.hashIndex] = new SLL();
-    this.bucket.insertHead({indexValue: indexValue, value: value});
+    if (!this.bucket){
+      if (this.buckets.length >= this.size) throw new Error('Error:  Number of allowable hash indexes exceeded');
+      this.bucket = this.buckets[hashIndex] = new SLL();
+    }
+    this.insertBucketValue(indexValue, value);
   }
 
   get(indexValue){
     this.isTypeError(indexValue);
-    if(this.typeError) return this.typeError;
-
-    this.hash(indexValue);
-    this.bucket = this.buckets[this.hashIndex];
+    this.bucket = this.buckets[this.hash(indexValue)];
     if (!this.bucket) return null;
     return this.getBucketValue(indexValue);
   }
 
-  delete(indexValue){
+  remove(indexValue){
     this.isTypeError(indexValue);
-    if(this.typeError) return this.typeError;
-    this.hash(indexValue);
-    this.bucket = this.buckets[this.hashIndex];
-    return  this.deleteBucketValue(indexValue);
+    this.bucket = this.buckets[this.hash(indexValue)];
+    if(!this.bucket) return null;
+    let value = this.deleteBucketValue(indexValue);
+    if (!this.bucket) delete this.buckets[this.hash(indexValue)];
+    return value;
   }
 
   isTypeError(arg){
-    if (typeof arg !== 'string' || typeof arg !== 'number' || !arg) this.typeError = new Error('Type Error: expecting string or number');
+    if (typeof arg !== 'string' && typeof arg !== 'number') throw new Error('Type Error: expecting string or number');
   }
+
+  insertBucketValue(indexVal, val){
+    let node = this.bucket.head;
+    while(node){
+      if( node.value.indexValue === indexVal ){
+        return node.value.value = val;
+      } 
+      node = node.next;
+    }
+    this.bucket.insertHead({indexValue: indexVal, value: val});
+  }
+
 
   getBucketValue(indexVal){
     let node = this.bucket.head;
@@ -72,7 +85,7 @@ class HashTable {
     while(node){
       if( node.value.indexValue === indexVal ){
         let nodeValue = node.value.value;
-        prev_node ? prev_node.next = node.next : delete this.bucket;
+        prev_node ? prev_node.next = node.next : this.bucket = null;
         return nodeValue;
       } 
       prev_node = node;
@@ -80,6 +93,5 @@ class HashTable {
     }
     return null;
   }
-}
+};
 
-export default HashTable;
