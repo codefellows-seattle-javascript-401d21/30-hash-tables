@@ -1,16 +1,15 @@
-># Lab 11: Express
+># lab 30 - Hash Table Data Structure
 
-This is a simple  HTTP server created using express.  There are four basic CRUD methods available for interacting with an object with three properties, subject, comment and id. 
+  This is hash table data structure based on an array using a size / value modulo for the indexing algorithm.
+  String indexes are a sum of the character's ascii codes.  Non string / numbers can be stored by supplying an index value.
 
-  - POST - Create an object and have it saved to a file. 
+  The hash table has the following methods available:
 
-  - PUT - modify the subject and comment properties.
+  - Set - add a value.
 
-  - GET - Fetch teh data for an object.
+  - Get - fetch a value
 
-  - DELETE - remove an object fro storage. 
-
-  The objects are stored in files on the server as json.
+  - Remove - delete a value
 
 >## Install
 
@@ -23,19 +22,10 @@ This is a simple  HTTP server created using express.  There are four basic CRUD 
 - This project has the following dependencies:
 
 ```JSON
-    "devDependencies": {
-        "debug": "^3.1.0",
-        "dotenv": "^5.0.0",
-        "eslint": "^4.16.0",
-        "jest": "^22.1.4",
-        "superagent": "^3.8.2"
-      },
-      "dependencies": {
-        "bluebird": "^3.5.1",
-        "body-parser": "^1.18.2",
-        "express": "^4.16.2",
-        "uuid": "^3.2.1"
-      }
+   "devDependencies": {
+    "eslint": "^4.18.1",
+    "jest": "^22.4.2"
+  }
 ```
 
 ### npm scripts
@@ -43,12 +33,10 @@ This is a simple  HTTP server created using express.  There are four basic CRUD 
 - The following npm scripts are available:
 
 ```JSON
-    "scripts": {
-      "lint": "eslint .",
-      "test": "jest --verbose -i",
-      "test:debug": "DEBUG=http* jest --verbose -i",
-      "start": "nodemon index.js",
-      "start:debug": "DEBUG=http* nodemon index.js"
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest --verbose -i"
+  }
 ```
 
 #### Run the tests!
@@ -59,172 +47,172 @@ Normal mode
     npm test
 ```
 
-Debug mode
-
-```BASH
-    npm run test:debug
-```
-
-#### Start the server
-
-Start
-
-```BASH
-    npm start
-```
-
-Debug mode
-
-```BASH
-    npm run start:debug
-```
 
 >## Usage
 
-### Post
+### Set
 
-  - Create a new note by sending a request to /api/v1/note with a body that contains a 'subject' and 'comment'.
+Set can take one or two arguments;
 
-  - The response will contain a json copy of the object with its unique identifier.
+  set(value) - simple values i.e. strings and numbers
+
+  set(index, value) - complex values i.e objects, arrays etc...
+
+- Add a value to the hash table.
+
+  - Strings and Numbers can be added to the has table by supplying one argument to set.
 
 ```JAVASCRIPT
-{subject: 'talking computers', comment: 'I don\'t like them'}
+    let hashTable = new HashTable();
 
-```
+    hashTable.set('Hello');
+    hashTable.set(327);
+    hashTable.set(467.937383);
+```    
+  - An object can be added to the hash table by supplying an index value
 
-```BASH
- http POST :4000/api/v1/note subject="talking computers" comment="I don't like them"
+```JAVASCRIPT
+    let hashTable = new HashTable();
 
-    HTTP/1.1 201 Created
-    Connection: keep-alive
-    Content-Length: 107
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:09:06 GMT
-    ETag: W/"6b-8CtRPZUH1itf2mPj1CjrgP2Py1Y"
-    X-Powered-By: Express
-
-    {
-        "comment": "I don't like them",
-        "id": "0171fde2-929b-4c67-a882-35e11fccc4fb",
-        "subject": "talking computers"
-    }
-```
-
-### GET - fetch one note
-
-  - Get a json object of a note by sending its unique id as a path to /api/v1/note/&lt;unique_id&gt;
-
-```BASH
-    http :4000/api/v1/note/0171fde2-929b-4c67-a882-35e11fccc4fb
-    HTTP/1.1 200 OK
-    Connection: keep-alive
-    Content-Length: 107
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:14:46 GMT
-    ETag: W/"6b-8CtRPZUH1itf2mPj1CjrgP2Py1Y"
-    X-Powered-By: Express
-
-    {
-        "comment": "I don't like them",
-        "id": "0171fde2-929b-4c67-a882-35e11fccc4fb",
-        "subject": "talking computers"
+    let user = {
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
     }
 
-```
-
-
-### GET - fetch all ids
-
-- Get a json array of all note ids by sending a GET request to /api/v1/note
-
-```BASH
-      http :4000/api/v1/note
-      HTTP/1.1 200 OK
-      Connection: keep-alive
-      Content-Length: 118
-      Content-Type: application/json; charset=utf-8
-      Date: Tue, 30 Jan 2018 08:18:30 GMT
-      ETag: W/"76-RO+qkcrAr3t6PEDzQQXujTYQdGw"
-      X-Powered-By: Express
-
-      [
-          "0171fde2-929b-4c67-a882-35e11fccc4fb",
-          "7370a48e-9546-4f05-92fb-6328fdc27afa",
-          "f2658693-3cbb-4aab-90ca-3ae7de04de02"
-      ]
-
-```
-
-### PUT - update a note
-
-  - Use the unique id to update a note along with a subject and comment in the request body with a PUT request to /api/v1/note
-
-```Bash
-    http POST :4000/api/v1/note subject="Helo" comment="How is you?"
-    HTTP/1.1 201 Created
-    Connection: keep-alive
-    Content-Length: 86
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:23:17 GMT
-    ETag: W/"56-NbKFB0DGFQ4LrE5HRKXuk09Ueu0"
-    X-Powered-By: Express
-
-    {
-        "comment": "How is you?",
-        "id": "201d5149-7736-42e1-a349-b6f3e641e735",
-        "subject": "Helo"
+     let friend = {
+      name: 'Mr. Winkie',
+      relationship: 'pet'
     }
 
-    --------------------
+    hashTable.set(user.id, user);
+    hashTable.set(friend.name, friend);
+```    
 
-    http PUT :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735 subject="Hello" comment="How are you?"
-    HTTP/1.1 204 No Content
-    Connection: keep-alive
-    Date: Tue, 30 Jan 2018 08:24:40 GMT
-    X-Powered-By: Express
+- Duplicate index values will be overwritten.  
 
-    ---------------------
+  - This can be used to update an object without deleting and then setting
 
-    http :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735
-    HTTP/1.1 200 OK
-    Connection: keep-alive
-    Content-Length: 88
-    Content-Type: application/json; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:25:27 GMT
-    ETag: W/"58-bETguzT0FCDFcQ95/XZ/XsWno3Y"
-    X-Powered-By: Express
+```JAVASCRIPT
+    let hashTable = new HashTable();
 
-    {
-        "comment": "How are you?",
-        "id": "201d5149-7736-42e1-a349-b6f3e641e735",
-        "subject": "Hello"
+    let user = {
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
     }
+
+    hashTable.set(user.id, user);
+
+    console.log( hashTable.get(1438494384)
+
+    `{
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
+    }`
+
+
+    let userUdate = {
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Squirrel Head';
+    }
+
+    hashTable.set(userUdate.id, userUdate);
+
+    console.log( hashTable.get(1438494384)
+
+    ` {
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Squirrel Head';
+    }`
 ```
 
-### Delete
+- A Type Error is thrown for index values that are not strings or numbers.
 
-- Delete a note from storage by making a DELETE request with a unique id of a note to /api/v1/note
 
-```BASH
-    http DELETE :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735
-    HTTP/1.1 204 No Content
-    Connection: keep-alive
-    Date: Tue, 30 Jan 2018 08:28:47 GMT
-    X-Powered-By: Express
+### Get
+
+- Fetch a value using the same index value that was used to set the value
+
+- Null is returned for index values that don't exist
+
+
+```JAVASCRIPT
+    let hashTable = new HashTable();
+
+    let user = {
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
+    }
+
+    hashTable.set(user.id, user);
+
+    console.log( hashTable.get(1438494384)
+
+    `{
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
+    }`
+
+    hashTable.set('Kevin');
+    hasTable.get('Kevin');  // 'Kevin'
+
+    hashTable.set(327);
+    hasTable.get(327);  // 327
+
+    hasTable.get('oops');  // null
+
 ```
 
-- A Get request with this id will now return an error 404.
+### Remove
 
-```BASH
-     http :4000/api/v1/note/201d5149-7736-42e1-a349-b6f3e641e735
-    HTTP/1.1 404 Not Found
-    Connection: keep-alive
-    Content-Length: 167
-    Content-Type: text/html; charset=utf-8
-    Date: Tue, 30 Jan 2018 08:30:12 GMT
-    ETag: W/"a7-vi2fSZmlczG1C4XL6S5hY+V1M+k"
-    X-Powered-By: Express
+- Delete a value from the hash table.  
 
-    Error: ENOENT: no such file or directory, open '../data/note/201d5149-7736-42e1-a349-b6f3e641e735.json'
+- The method returns the value of the removed item.
+
+- A Type Error is thrown for index values that are not strings or numbers.
+
+```JAVASCRIPT
+    let hashTable = new HashTable();
+
+    let user = {
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
+    }
+
+    hashTable.set(user.id, user);
+
+    console.log(hashTable.remove(1438494384)
+
+    `{
+      id: 1438494384,
+      name: 'kevin',
+      pet_name: 'Mr. Winkie';
+    }`
+
+    hashTable.set('Kevin');
+    hasTable.remove('Kevin');  // 'Kevin'
+
+    hashTable.set(327);
+    hasTable.remove(327);  // 327
+
+    hasTable.remove('oops');  // null
+
 ```
+
+### Type Error
+
+```JAVASCRIPT
+  let hashTable = new HashTable();
+  
+  hashTable.set([1,2,3])s
+  'Type Error: expecting string or number'
+```
+
 

@@ -12,10 +12,19 @@
     "res": true,
     "next": true
   },
-  "extends": "eslint:recommended",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "classes": true,
+      "jsx": true,
+      "templateStrings": true,
+      "spread": true,
+      "modules": true
+    }
   },
+  "extends": ["eslint:recommended"],
   "rules": {
     "no-console": "off",
     "indent": [ "error", 2 ],
@@ -25,3 +34,4 @@
     "linebreak-style": ["error", "unix"]
   }
 }
+
