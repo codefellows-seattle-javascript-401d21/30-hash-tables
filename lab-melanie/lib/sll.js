@@ -1,6 +1,7 @@
 'use strict';
 
-function Nd(value) {
+function Node(key, value) {
+  this.key = key;
   this.value = value;
   this.next = null;
 }
@@ -10,16 +11,16 @@ class SLL {
     this.head = null;
   }
 
-  insertEnd(value) { // Big O: best case O(1) if no other node exists, worst case O(n), iterates to end of list before creating
+  insertEnd(key, value) { // Big O: best case O(1) if no other node exists, worst case O(n), iterates to end of list before creating
     if(!value) return null;
-    let nd = new Nd(value);
+    if(!key) return null;
+    let node = new Node(key, value);
     if(!this.head) {
-      this.head = nd;
-      this.listLength ++;
+      this.head = node;
       return this;
     }
     for(var itr = this.head; itr.next; itr = itr.next);
-    itr.next = nd;
+    itr.next = node;
     // this.listLength ++;
     return this;
   }
