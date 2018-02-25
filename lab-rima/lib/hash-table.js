@@ -18,11 +18,18 @@ HashTable.prototype.hash = function(key) {
 }
 
 HashTable.prototype.set = function(key, value) {
-  this.memory[this.hash(key)].insertHead(value);
+  this.memory[this.hash(key)].insertHead({'key': key, 'val': value});
 }
 
 HashTable.prototype.get = function(key) {
-  return this.memory[this.hash(key)];
+  let currentNode = this.memory[this.hash(key)].head;
+  while(currentNode){
+    if(currentNode.value['key'] === key){
+      return currentNode.value['val'];
+    }
+    currentNode = currentNode.next;
+  }
+  return null
 }
 
 HashTable.prototype.remove = function(key) {

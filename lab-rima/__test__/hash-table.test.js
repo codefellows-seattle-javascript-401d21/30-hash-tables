@@ -24,7 +24,7 @@ describe('Hash table module', () => {
       expect(0 <= hashedKey < hash_table.size).toBe(true);
     });
 
-    test('Invalid input: should throw an error', () => {
+    test('Invalid input: should throw an error with an invalid type of key', () => {
       const hash_table = new HashTable();
 
       expect(() => hash_table.hash(0)).toThrow('Invalid type of key');
@@ -36,10 +36,10 @@ describe('Hash table module', () => {
       const hash_table = new HashTable();
       hash_table.set('key', 'value');
 
-      expect(hash_table.memory[hash_table.hash('key')].head.value).toEqual('value');
+      expect(hash_table.memory[hash_table.hash('key')].head.value).toEqual({'key': 'key', 'val': 'value'});
     });
 
-    test('Invalid input: should throw an error with an invalid key', () => {
+    test('Invalid input: should throw an error with an invalid type of key', () => {
       const hash_table = new HashTable();
 
       expect(() => hash_table.set(0, 'value')).toThrow('Invalid type of key');
@@ -47,11 +47,23 @@ describe('Hash table module', () => {
   });
 
   describe('get function', function(){
-    test('should create an instance of hash table', () => {
+    test('Valid input: should return a value', () => {
+      const hash_table = new HashTable();
+      hash_table.set('key', 10);
+
+      expect(hash_table.get('key')).toEqual(10);
+    });
+
+    test('Invalid input: should throw an error with an invalid type of key', () => {
       const hash_table = new HashTable();
 
-      expect(hash_table.size).toEqual(1024);
-      expect(hash_table.memory.length).toEqual(1024);
+      expect(() => hash_table.get(0)).toThrow('Invalid type of key');
+    });
+
+    test('Non existing key: should return null', () => {
+      const hash_table = new HashTable();
+
+      expect(hash_table.get('non existing')).toBeNull();
     });
   });
 
