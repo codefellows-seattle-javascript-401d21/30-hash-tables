@@ -1,9 +1,11 @@
 'use strict';
 
+const Sll = require('./sll');
+
 
 const HashTable = module.exports = function(size=1024) {
   this.size = size;
-  this.memory = [...Array(this.size)];
+  this.memory = [...Array(this.size)].fill(new Sll());
 }
 
 HashTable.prototype.hash = function(key) {

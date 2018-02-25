@@ -1,5 +1,6 @@
 'use strict';
 
+const Sll = require('../lib/sll');
 const HashTable = require('../lib/hash-table');
 
 
@@ -11,6 +12,7 @@ describe('Hash table module', () => {
 
       expect(hash_table.size).toEqual(1024);
       expect(hash_table.memory.length).toEqual(1024);
+      expect(hash_table.memory[0] instanceof Sll).toEqual(true);
     });
   });
 
