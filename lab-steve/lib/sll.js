@@ -8,7 +8,9 @@ class SLL {
     this.length = 0;
   }
 
-  insertHead(value) {
+  // BigO(1) to insert
+  // Always inserts at the head
+  insert(value) {
     if (!value && value !== 0) return this;
 
     let node = new Node(value);
@@ -18,79 +20,17 @@ class SLL {
     return this;
   }
 
-  // currently only supports numbers
-  // BigO(n) worst case
-  insertAscending(value) {
-    if (typeof value !== 'number')
-      throw Error('Error: only numbers supported for insertAscending');
-
-    let node = new Node(value);
-
-    if (!this.head || this.head.value >= value) {
-      node.next = this.head;
-      this.head = node;
-      this.length++;
-      return this;
-    }
-
-    let cur = this.head;
-    while (cur.next && cur.next.value < value) {
-      cur = cur.next;
-    }
-    node.next = cur.next;
-    cur.next = node;
-
-    return this;
-  }
-
-  insertEnd(value) {
-    if (!value && value !== 0) return this;
-    // If the list was empty
-    if (!this.length) {
-      return this.insertHead(value);
-    }
-
-    let node = new Node(value);
-    // Find the last node
-    let itr;
-    for (itr = this.head; itr.next; itr = itr.next);
-
-    itr.next = node;
-    this.length++;
-
-    return this;
-  }
-
-  reverse() {
-    if (!this.length) return this;
-
-    let prev = null;
-    let cur = this.head;
-    let next;
-
-    while (cur) {
-      next = cur.next;
-      cur.next = prev;
-      prev = cur;
-      cur = next;
-    }
-
-    // Finally, reassign the head
-    this.head = prev;
-
-    return this;
-  }
-
-  // offset is treated as an index (e.g. the list starts at 0)
-  remove(offset) {
+  // BigO(n) to find and remove the node
+  // checkCallback returns true if the node matches what should be removed
+  remove(checkCallback) {
     let node;
     // Nothing to remove
     if (!this.length) return null;
-    // It can't be removed if it doesn't exist
-    if (offset > this.length - 1) return null;
+    if (!checkCallback || typeof checkCallback !== 'function')
+      throw new TypeError(`${checkCallback} is not a function`);
 
     // When the node to remove is the head
-    if (offset === 0) {
+    if (checkCallback(this.head.value)) {
       node = this.head;
       this.head = this.head.next;
       this.length--;
@@ -99,27 +39,36 @@ class SLL {
     }
 
     // Find the node before the one to remove
-    let itr;
-    for (itr = this.head; offset - 1 > 0; itr = itr.next, offset--);
+    let prev = this.head;
+    let cur = prev.next;
+    while (cur && !checkCallback(cur.value)) {
+      prev = cur;
+      cur = cur.next;
+    }
 
-    // Remove it
-    node = itr.next;
-    itr.next = itr.next.next;
-    this.length--;
-    node.next = null;
-    return node;
-  }
+    // Remove it - if cur is null nothing was found
+    //
+    //   prev -\    cur-----\
+    //         |            |
+    //   --------    ----------------
+    //  |        |->| node to remove |->...
+    //   --------    ----------------
+    //
+    if (cur) {
+      // Save the node
+      node = cur;
+      // Point around it
+      prev.next = prev.next.next;
+      // Decrement list length
+      this.length--;
+      // Remove the reference
+      node.next = null;
 
-  findNthNodeFromEnd(n) {
-    // We can't find it if it doesn't exist
-    if (n < 0 || n > this.length - 1) return null;
+      // return the node that was removed
+      return node;
+    }
 
-    // Find the node
-    let x = this.length - n;
-    let itr;
-    for (itr = this.head; x > 1; itr = itr.next, x--);
-
-    return itr;
+    return null;
   }
 }
 
