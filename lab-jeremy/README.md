@@ -12,17 +12,43 @@ _Last modified_: 2/24/2018
 
 This lab generates a hash table library using an array of singly linked lists. Required libraries include the node and singly linked list custom libraries in the lib folder.
 
+## Installation
+
+```
+const HashTable = require('[PATH TO HASHTABLE LIBRARY]');
+```
+
 ## Methods
-Hashtable(size) - Constructor
+```
+HashTable(size) - Constructor
 
-Hashtable.haskKey(key) - Generates an index value to store hash with SLL
+HashTable.haskKey(key) - Generates an index value to store hash with SLL
 
-Hashtable.set(key, value) - Sets a value in a node in a SLL in the form of [key, value] if possible.
+HashTable.set(key, value) - Sets a value in a node in a SLL in the form of [key, value] if possible.
 
-Hashtable.get(key) - Gets the value of a node given a key if possible.
+HashTable.get(key) - Gets the value of a node given a key if possible.
 
-Hashtable.remove(key) - Removes a node given a key if possible.
+HashTable.remove(key) - Removes a node given a key if possible.
+```
 
+## Examples
+
+```
+let MyTable = new HashTable(10); // Creates a size 10 hashtable
+let MyTable2 = new HashTable(); // Creates a size 1024 hashtable
+
+MyTable.hashKey('mykey1') // returns the index of the bucket that the key will be assigned to
+
+MyTable.set('mykey1', 'myval'); // sets a value of 'myval' to given key 'mykey1' (both params required)
+
+MyTable.get('mykey1'); // gets the value assosiated with mykey1 (myval)
+
+MyTable.remove('mykey1'); // removes the value that is linked to the key 'mykey1' (myval)
+```
+
+## Tests
+
+Simply type npm run test in the terminal and watch the magic.
 
 # Lab Readme (SPECS)
 

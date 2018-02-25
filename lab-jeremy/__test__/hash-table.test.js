@@ -4,7 +4,7 @@ const HashTable = require('../lib/hash-table');
 const SLL = require('../lib/sll');
 require('jest');
 
-describe('#Hashtable Constructor tests', function() {
+describe('Hashtable Constructor tests', function() {
   describe('#Standard Case ', function() {
     it('Should return: A hash table', function() {
       expect(new HashTable()).toBeInstanceOf(HashTable);
@@ -25,7 +25,7 @@ describe('#Hashtable Constructor tests', function() {
 
 });
 
-describe('#Hashtable.haskKey tests', function() {
+describe('Hashtable.haskKey tests', function() {
   describe('#null Case ', function() {
     it('Should return: error', function() {
       expect(new HashTable().hashKey()).toBeInstanceOf(Error);
@@ -40,18 +40,19 @@ describe('#Hashtable.haskKey tests', function() {
 
 });
 
-describe('#Hashtable.set tests', function() {
+describe('Hashtable.set tests', function() {
   describe('#null Case ', function() {
     it('Should return: error', function() {
       expect(new HashTable().set()).toBeInstanceOf(Error);
     });
   });
 
-  let myTestHashTable = new HashTable(10).set('mything', 'myval');
+  let myTestHashTable = new HashTable(10);
+  myTestHashTable.set('mything', 'myval');
 
   describe('#Standard Case ', function() {
     it('Should return: SLL', function() {
-      expect(myTestHashTable.memory).toBeInstanceOf(SLL);
+      expect(myTestHashTable.memory[8]).toBeInstanceOf(SLL);
     });
   });
 
@@ -69,27 +70,49 @@ describe('#Hashtable.set tests', function() {
 
 });
 
-describe('#Hashtable.get tests', function() {
+describe('Hashtable.get tests', function() {
+  let myTestHashTable2 = new HashTable(10);
+  myTestHashTable2.set('mything', 'myval');
+
   describe('#null Case ', function() {
     it('Should return: error', function() {
       expect(new HashTable().get()).toBeInstanceOf(Error);
     });
   });
   
-  let testHashTable1 = new HashTable(10);
-  testHashTable1.set('mykey', 'myval');
-  
   describe('#Standard Case ', function() {
-    it('Should return: get myval', function() {
-      expect(testHashTable1.get('mykey')).toEqual('myval');
+    it('Should return: error', function() {
+      expect(myTestHashTable2.get('badkey')).toBeInstanceOf(Error);
     });
   });
+
+  describe('#Standard Case ', function() {
+    it('Should return: get myval', function() {
+      expect(myTestHashTable2.get('mything')).toEqual('myval');
+    });
+  });
+
 });
 
-describe('#Hashtable.remove tests', function() {
+describe('Hashtable.remove tests', function() {
+  let myTestHashTable3 = new HashTable(10);
+  myTestHashTable3.set('mything', 'myval');
+
   describe('#null Case ', function() {
     it('Should return: error', function() {
       expect(new HashTable().remove()).toBeInstanceOf(Error);
+    });
+  });
+
+  describe('#bad key Case ', function() {
+    it('Should return: error', function() {
+      expect(myTestHashTable3.remove('badkey')).toBeInstanceOf(Error);
+    });
+  });
+
+  describe('#null Case ', function() {
+    it('Should return: error', function() {
+      expect(myTestHashTable3.remove('mything')).toEqual('myval');
     });
   });
 

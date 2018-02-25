@@ -65,7 +65,11 @@ HashTable.prototype.remove = function(key) {
   while (currNode)
   {
     // if key is found remove node at index
-    if (currNode.val && currNode.val[0] === key) this.memory[this.hashKey(key)].remove(nodeTracker);
+    if (currNode.val && currNode.val[0] === key) {
+      let tmp = currNode.val[1];
+      this.memory[this.hashKey(key)].remove(nodeTracker);
+      return tmp;
+    }
     currNode = currNode.next || null;
     nodeTracker++;
   }
