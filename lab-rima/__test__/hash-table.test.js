@@ -66,6 +66,14 @@ describe('Hash table module', () => {
       expect(hash_table.memory[329].head.next.value).toEqual({'key': 'test key', 'val': 'test val'});
     });
 
+    test('Valid input: should replace a value with new value if key exists', () => {
+      const hash_table = new HashTable();
+      hash_table.set('key', 'value');
+      hash_table.set('key', 'new value');
+
+      expect(hash_table.memory[hash_table.hash('key')].head.value).toEqual({'key': 'key', 'val': 'new value'});
+    });
+
     test('Invalid input: should throw an error with an invalid type of key', () => {
       const hash_table = new HashTable();
 

@@ -22,7 +22,20 @@ HashTable.prototype.hash = function(key) {
 }
 
 HashTable.prototype.set = function(key, value) {
-  this.memory[this.hash(key)].insertHead({'key': key, 'val': value});
+  if(this.memory[this.hash(key)].head === null){
+    this.memory[this.hash(key)].insertHead({'key': key, 'val': value});
+  }else{
+    let currentNode = this.memory[this.hash(key)].head;
+    while(currentNode){
+      if(currentNode.value['key'] === key){
+        currentNode.value['val'] = value;
+        return;
+      }
+      currentNode = currentNode.next;
+    }
+    this.memory[this.hash(key)].insertHead({'key': key, 'val': value});
+  }
+  return;
 }
 
 HashTable.prototype.get = function(key) {
