@@ -9,7 +9,11 @@ const HashTable = module.exports = function(size=1024) {
 }
 
 HashTable.prototype.hash = function(key) {
-  let hashedKey = key.split('').reduce((a, b) => a + b.charCodeAt(0)) % this.size;
+  if(typeof key !== 'string'){
+    throw new Error('Invalid type of key');
+  }
+
+  let hashedKey = key.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % this.size;
   return hashedKey;
 }
 

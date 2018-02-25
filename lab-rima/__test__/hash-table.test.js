@@ -17,11 +17,16 @@ describe('Hash table module', () => {
   });
 
   describe('hash function', function(){
-    test('should create an instance of hash table', () => {
-      const hash_table = HashTable();
+    test('Valid input: should return a number within its size', () => {
+      const hash_table = new HashTable();
+      const hashedKey = hash_table.hash('key');
 
-      expect(hash_table.size).toEqual(1024);
-      expect(hash_table.memory.length).toEqual(1024);
+      expect(0 <= hashedKey < hash_table.size).toBe(true);
+    });
+    test('Invalid input: should throw an error', () => {
+      const hash_table = new HashTable();
+
+      expect(() => hash_table.hash(0)).toThrow('Invalid type of key');
     });
   });
 
