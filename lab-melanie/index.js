@@ -23,4 +23,10 @@ hashTable.set(one.key, one.value);
 hashTable.set(two.key, two.value);
 hashTable.set(three.key, three.value);
 
-console.log(hashTable.memory);
+console.log('3 nodes set to memory: ', hashTable.memory);
+
+console.log('get "jane" from table: ', hashTable.get('jane'));
+
+hashTable.remove('jane');
+
+console.log('"jane" removed from table: ', hashTable.memory);
