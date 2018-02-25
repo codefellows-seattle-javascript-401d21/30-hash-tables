@@ -14,12 +14,14 @@ HashTable.prototype.hash = function(key) {
 };
 
 HashTable.prototype.set = function(key, value) {
+  if (!key || !value || typeof key !== 'string') return 'error';
   let index = this.hash(key);
   if (!this.buckets[index]) this.buckets[index] = (new SLL).insertTail(key, value);
   else this.buckets[index].insertTail(key, value);
 };
 
 HashTable.prototype.get = function(key) {
+  if (!key || typeof key !== 'string') return 'error';
   let bucket = this.buckets[this.hash(key)];
   if (!bucket) return null;
   let current = bucket.head;
@@ -31,6 +33,7 @@ HashTable.prototype.get = function(key) {
 };
 
 HashTable.prototype.remove = function(key) {
+  if (!key || typeof key !== 'string') return 'error';
   let bucket = this.buckets[this.hash(key)];
   if (!bucket) return null;
   let current = bucket.head;
