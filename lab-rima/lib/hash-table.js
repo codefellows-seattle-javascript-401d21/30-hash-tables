@@ -10,7 +10,7 @@ const HashTable = module.exports = function(size=1024) {
 
   this.size = size;
   this.memory = [...Array(this.size)].fill(new Sll());
-}
+};
 
 HashTable.prototype.hash = function(key) {
   if(typeof key !== 'string'){
@@ -19,7 +19,7 @@ HashTable.prototype.hash = function(key) {
 
   let hashedKey = key.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % this.size;
   return hashedKey;
-}
+};
 
 HashTable.prototype.set = function(key, value) {
   if(this.memory[this.hash(key)].head === null){
@@ -36,7 +36,7 @@ HashTable.prototype.set = function(key, value) {
     this.memory[this.hash(key)].insertHead({'key': key, 'val': value});
   }
   return;
-}
+};
 
 HashTable.prototype.get = function(key) {
   let currentNode = this.memory[this.hash(key)].head;
@@ -47,7 +47,7 @@ HashTable.prototype.get = function(key) {
     currentNode = currentNode.next;
   }
   return null;
-}
+};
 
 HashTable.prototype.remove = function(key) {
   let currentNode = this.memory[this.hash(key)].head;
@@ -72,5 +72,5 @@ HashTable.prototype.remove = function(key) {
     currentNode = currentNode.next;
   }
   return null;
-}
+};
 
