@@ -12,7 +12,7 @@ class Pair {
 // Hashtable implementation
 module.exports = class {
   constructor(size = 1024) {
-    if (!size || typeof size !== 'number')
+    if (typeof size !== 'number')
       throw new Error(`invalid size ${size}`);
     if (size <= 0) throw new Error(`invalid size value ${size}`);
 
