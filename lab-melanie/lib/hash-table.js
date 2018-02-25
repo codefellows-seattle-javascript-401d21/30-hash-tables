@@ -9,6 +9,10 @@ class HashTable {
   }
 
   hashKey(key) {
+    // -- validate -- //
+    if(!key) return 'Error, key missing';
+    if(typeof key !== 'string') return 'Error, key needs to be a string';
+
     // -- convert string to number -- //
     let hash = key.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % this.size;
 
@@ -33,9 +37,10 @@ class HashTable {
   get(key) {
     // -- validate -- //
     if(!key) return 'Error, key missing';
+    if(typeof key !== 'string') return 'Error, key needs to be a string';
 
-    let index = this.memory[this.hashKey(key)];
-    if(!index) return 'Error, this key does not exist in table';
+    let hash = this.hashKey(key);
+    let index = this.memory[hash];
 
     // -- reference to current node -- //
     let curr = index.head;
@@ -44,20 +49,22 @@ class HashTable {
       if(curr.key === key) return curr; // return node with key-value pair
       curr = curr.next;
     }
+    return 'Error, this key does not exist in table'; // if no key matched
   }
 
   remove(key) {
     // -- validate -- //
     if(!key) return 'Error, key missing';
+    if(typeof key !== 'string') return 'Error, key needs to be a string';
 
     let index = this.memory[this.hashKey(key)];
-    if(!index) return 'Error, this key does not exist in table';
+    if(!index.head) return 'Error, this key does not exist in table';
 
     let prev;
     let curr = index.head;
 
     // -- if node is only one in memory's index -- //
-    if(!curr.next) delete index.head;
+    if(index.head.key === key) delete index.head;
 
     // iterate through list and remove reference to node
     while(curr.next) {
