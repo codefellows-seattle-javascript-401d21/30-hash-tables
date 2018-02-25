@@ -1,0 +1,15 @@
+{
+  "name": "lab-melanie",
+  "version": "1.0.0",
+  "description": "Hash Tables",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose"
+  },
+  "author": "Melanie",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "jest": "^22.4.2"
+  }
+}
