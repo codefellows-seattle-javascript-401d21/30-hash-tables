@@ -29,13 +29,31 @@ HashTable.prototype.get = function(key) {
     }
     currentNode = currentNode.next;
   }
-  return null
+  return null;
 }
 
 HashTable.prototype.remove = function(key) {
-  let pos = this.hash(key);
+  let currentNode = this.memory[this.hash(key)].head;
+  if(currentNode === null){
+    return null;
+  }
+  if(currentNode.value['key'] === key){
+    this.memory[this.hash(key)].head = this.memory[this.hash(key)].head.next;
+    this.memory[this.hash(key)].length -= 1;
+    return;
+  }
 
-  return this.memory[pos] ? delete this.memory[pos] : new Error('Invalid Key');
+  let preNode = currentNode;
+  currentNode = currentNode.next;
+  while(currentNode){
+    if(currentNode.value['key'] === key){
+      preNode.next = currentNode.next;
+      this.memory[this.hash(key)].length -= 1;
+      return;
+    }
+    preNode = currentNode;
+    currentNode = currentNode.next;
+  }
+  return null;
 }
-
 

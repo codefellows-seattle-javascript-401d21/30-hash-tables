@@ -68,11 +68,36 @@ describe('Hash table module', () => {
   });
 
   describe('remove function', function(){
-    test('should create an instance of hash table', () => {
+    test('Valid input: should remove a node from sll (no collision)', () => {
+      const hash_table = new HashTable();
+      hash_table.set('key', 100);
+      hash_table.remove('key');
+
+      expect(hash_table.get('key')).toBeNull();
+      expect(hash_table.memory[hash_table.hash('key')]).toEqual(new Sll());
+    });
+
+    test('Valid input: should remove a node from sll (collision)', () => {
+      const hash_table = new HashTable();
+      hash_table.memory[0].insertHead({'key': 'one', 'val': 'ONE'});
+      hash_table.memory[0].insertHead({'key': 'two', 'val': 'TWO'});
+      hash_table.memory[0].insertHead({'key': 'three', 'val': 'THREE'});
+      hash_table.remove('two');
+
+      expect(hash_table.memory[0].head.value).toEqual({'key': 'three', 'val': 'THREE'});
+      expect(hash_table.memory[0].head.next.value).toEqual({'key': 'one', 'val': 'ONE'});
+    });
+
+    test('Invalid input: should throw an error with an invalid type of key', () => {
       const hash_table = new HashTable();
 
-      expect(hash_table.size).toEqual(1024);
-      expect(hash_table.memory.length).toEqual(1024);
+      expect(() => hash_table.remove(0)).toThrow('Invalid type of key');
+    });
+
+    test('Non existing key: should return null', () => {
+      const hash_table = new HashTable();
+
+      expect(hash_table.remove('non existing')).toBeNull();
     });
   });
 
