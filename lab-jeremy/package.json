@@ -1,0 +1,20 @@
+{
+  "name": "lab-30-hash-tables",
+  "version": "1.0.0",
+  "description": "hash tables jest test",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i"
+  },
+  "keywords": [
+    "hash",
+    "tables",
+    "jest",
+    "test"
+  ],
+  "author": "Jeremy Pearson",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.4.2"
+  }
+}
