@@ -4,13 +4,11 @@ const Node = require('./node');
 
 
 class SLL {
-  // O(1)
   constructor() {
     this.head = null;
     this.length = 0;
   }
 
-  // O(1)
   insertHead(val) {
     let node = new Node(val);
     node.next = this.head;
@@ -19,7 +17,6 @@ class SLL {
     return this;
   }
 
-  // O(n)
   insertEnd(val) {
     let node = new Node(val);
     this.length++;
@@ -37,7 +34,6 @@ class SLL {
     return this;
   }
 
-  // O(n)
   reverse() {
     let newThis = new SLL();
     let current = this.head;
@@ -50,7 +46,6 @@ class SLL {
     return this;
   }
 
-  // O(n)
   remove(n) {
     if(n > this.length || n <= 0 || typeof n !== 'number'){
       return null;
@@ -67,7 +62,6 @@ class SLL {
     return this;
   }     
 
-  // O(n)
   findNthNode(n) {
     if(n > this.length || n <= 0 || typeof n !== 'number'){
       return null;
@@ -83,7 +77,6 @@ class SLL {
     return currentNode;
   }
 
-  // O(n)
   findNthNodeFromEnd(n) {
     return this.findNthNode(this.length - n + 1);
   }
