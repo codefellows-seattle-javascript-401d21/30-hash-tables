@@ -16,6 +16,34 @@ describe('Hash Table test', function(){
   });
 
   describe('Valid input', function(){
+
+    describe.only('HASH Method', () => {
+      it('Should create a hash from a number that is a number', () =>{
+        let ht = new HashTable(); 
+        let val = 33;
+        expect(ht.hash(val)).toEqual(Math.floor(ht.size % val));
+      });
+
+      it('Should create a hash from a number that is a number, even if 0', () =>{
+        let ht = new HashTable(); 
+        let val = 0;
+        expect(ht.hash(val)).toEqual(0);
+      });
+
+      it('Should create a hash from a number that is a number, even if value has a decimal', () =>{
+        let ht = new HashTable(); 
+        let val = 34.9848;
+        expect(ht.hash(val)).toEqual(Math.floor(ht.size % val));
+      });
+
+      it('Should create a hash from a string that is a number', () =>{
+        let ht = new HashTable(); 
+        let val = 'hello';
+        expect(ht.hash(val)).toEqual(Math.floor(ht.size % val.split('').reduce((acc, cur) => acc + cur.charCodeAt(0), 0)));
+      });
+
+    });
+
   
     describe('SET Method', () => {
 

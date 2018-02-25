@@ -34,22 +34,27 @@ class HashTable {
       this.bucket = this.buckets[hashIndex] = new SLL();
     }
     this.insertBucketValue(indexValue, value);
+    //Big-O since this is a linked list that does not allow dupes
+    // the list must be iterated over
+    //Big-0 best: O(1) worst: O(n) n = number of nodes in list
   }
 
-  get(indexValue){
+  get(indexValue){ //Big-O for finding the index: O(1)
     this.isTypeError(indexValue);
     this.bucket = this.buckets[this.hash(indexValue)];
     if (!this.bucket) return null;
     return this.getBucketValue(indexValue);
+    //Big-O finding value: since this is a linked list, Big-0 best: O(1) worst: O(n) n = number of nodes in list
   }
 
-  remove(indexValue){
+  remove(indexValue){ //Big-O for finding the index: O(1)
     this.isTypeError(indexValue);
     this.bucket = this.buckets[this.hash(indexValue)];
     if(!this.bucket) return null;
     let value = this.deleteBucketValue(indexValue);
     if (!this.bucket) delete this.buckets[this.hash(indexValue)];
     return value;
+    //Big-O finding value: since this is a linked list, Big-0 best: O(1) worst: O(n) n = number of nodes in list
   }
 
   isTypeError(arg){
