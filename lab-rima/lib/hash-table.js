@@ -18,7 +18,7 @@ HashTable.prototype.hash = function(key) {
 }
 
 HashTable.prototype.set = function(key, value) {
-  this.memory[this.hash(key)] = value;
+  this.memory[this.hash(key)].insertHead(value);
 }
 
 HashTable.prototype.get = function(key) {
