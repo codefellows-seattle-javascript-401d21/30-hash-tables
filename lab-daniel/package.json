@@ -15,8 +15,7 @@
   ],
   "author": "Daniel",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "jest": "^22.1.4"
   }
