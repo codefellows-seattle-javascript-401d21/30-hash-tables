@@ -1,5 +1,14 @@
 ## Lab 30-hash-table
-Creating and testing a hash table data structure implementation with a hashTable constructor, a hashKey method, a set method to insert nodes, a get method to retrieve nodes/data and a remove method to delete nodes.  Data storage in each hashTable bucket/array is implemented with a singly linked list.
+Creating and testing a hash table data structure implementation with a hashTable constructor, a hashKey method, a set method to insert nodes, a get method to retrieve nodes/data and a remove method to delete nodes.  
+
+Data storage in each hashTable bucket/array is implemented with a singly linked list.
+
+Big O notation:
+HashTable constructor - O(1)
+HashKey method - O(N) because it uses reduce
+Set method - O(1)
+Get method - O(N) as it uses a while loop to iterate, O(1) if no list
+Remove method -O(N) as it uses a while loop to iterate, O(1) if no list
 
 ### Installing
 
