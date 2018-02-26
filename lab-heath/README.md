@@ -35,6 +35,19 @@ hash table with only test left: [ SLL { head: Node { key: 'tim', value: '1', nex
 ```
 as shown above, we added 3 data sets, removed 2 of them and then got the last one and one that was removed to see the error. Lastly you can see the whole hash-table and see that there was 2 SLL in spots 3 and 4 in the index. 
 
+you can also run the ESLINT
+
+do this by typing in 
+```javascript
+npm run lint
+```
+this will let you know about the any linter error.
+
+---
+## Big O
+
+when we are getting a item from the Hash Table, if the item is at the head of a SLL, the big-O is `O(1)`. if it it has more then 1 node at that hash key, then it goes to `O(n)`.
+
 ---
 ## How to use
 
