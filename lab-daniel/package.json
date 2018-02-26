@@ -1,0 +1,22 @@
+{
+  "name": "lab-daniel",
+  "version": "0.0.0",
+  "description": "hash tables",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "hash tables",
+    "data-structures"
+  ],
+  "author": "Daniel",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^22.1.4"
+  }
+}
