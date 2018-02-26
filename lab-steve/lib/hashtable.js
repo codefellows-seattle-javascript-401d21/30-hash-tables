@@ -32,7 +32,19 @@ module.exports = class {
     return hash % this.size;
   }
 
-  get(key) {}
+  get(key) {
+    let hash = this._hash(key);
+
+    // The bucket doesn't even exist
+    if (!this.bucket[hash])
+      return null;
+
+    // A bucket exists, see if the HashNode can be found
+    let node = this.bucket[hash].find(item => item.key === key);
+
+    // If the node was found, return the value, otherwise null
+    return node ? node.value : null;
+  }
 
   set(key, value) {
     let hash = this._hash(key);
