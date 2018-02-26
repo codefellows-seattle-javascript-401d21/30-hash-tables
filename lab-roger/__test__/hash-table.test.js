@@ -48,15 +48,29 @@ describe('The test solution of hash-table', () => {
 
   });
   describe('Get method', () => {
+    it('should return error if no key passed to get method', () => {
+      expect(testHashTable.get()).toBeInstanceOf(Error);
+    });
     it('should return the value of the item called', () => {
       testHashTable.set('hello', 45);
       expect(testHashTable.get('hello')).toEqual(45);
+    });
+    it('should return null if item does not exist', () => {
+      testHashTable.set('hello', 45);
+      expect(testHashTable.get('peter')).toEqual(null);
     });
 
 
   });
 
   describe('Remove method', () => {
+    it('should return error if no key passed to get method', () => {
+      expect(testHashTable.remove()).toBeInstanceOf(Error);
+    });
+    it('should return an error if the item is not found', () => {
+      expect(testHashTable.remove('peter')).toBeInstanceOf(Error);
+    });
+
     it('should remove the item with the correct key', () => {
       testHashTable.set('hello', 45);
       testHashTable.set('olleh', 50);
@@ -64,7 +78,8 @@ describe('The test solution of hash-table', () => {
       testHashTable.set('lleho', 70);
   
       expect(testHashTable.remove('hello')).toEqual('item removed');
-      expect(testHashTable.get('hello')).toEqual('');
+      expect(testHashTable.get('hello')).toEqual(null);
+      expect(testHashTable.get('lleho')).toEqual(70);
     });
 
   });
