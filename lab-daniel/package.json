@@ -1,7 +1,7 @@
 {
   "name": "lab-daniel",
   "version": "0.0.0",
-  "description": "k-ary arrays",
+  "description": "hash tables",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -10,15 +10,12 @@
     "test": "jest"
   },
   "keywords": [
-    "k-ary",
-    "trees",
+    "hash tables",
     "data-structures"
   ],
   "author": "Daniel",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.1",
-    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "jest": "^22.1.4"
