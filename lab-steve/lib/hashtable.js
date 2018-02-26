@@ -1,5 +1,7 @@
 'use strict';
 
+const SLL = require('./sll');
+
 class HashNode {
   constructor(key, value) {
     if (!key || typeof key !== 'string') throw new Error(`invalid key ${key}`);
@@ -32,7 +34,15 @@ module.exports = class {
 
   get(key) {}
 
-  set(key, value) {}
+  set(key, value) {
+    let hash = this._hash(key);
+
+    // conditionally create a new sll
+    if (!this.bucket[hash])
+      this.bucket[hash] = new SLL();
+
+    this.bucket[hash].insert(new HashNode(key, value));
+  }
 
   remove(key) {}
 };
