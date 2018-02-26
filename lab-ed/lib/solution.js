@@ -27,14 +27,20 @@ solution.set = function(key, value) {
   let index = solution.hash(key)
   if (!hashTable.buckets[index]) {
     hashTable.buckets[index] = new Node(key, value)
-    console.log(hashTable)
     return hashTable
   }
 }
 
-// solution.get = function(key) {
-//   // looks in the hashed keys bucket and returns the value of the node containing the key, or null if not found
-// }
+solution.get = function(key) {
+  // looks in the hashed keys bucket and returns the value of the node containing the key, or null if not found
+  let index = solution.hash(key)
+  if (!hashTable.buckets[index]) return null
+  let node = hashTable.buckets[index]
+  while (node) {
+    if (node.key === key) return node.value
+    node = node.next
+  }
+}
 
 // solution.remove = function(key) {
 //   // removes the dll node node containing the key
