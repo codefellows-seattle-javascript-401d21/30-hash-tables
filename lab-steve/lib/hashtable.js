@@ -13,6 +13,7 @@ class HashNode {
 
 // Hash table implementation
 module.exports = class {
+  // BigO(1) to create a new HashTable
   constructor(size = 1024) {
     if (typeof size !== 'number') throw new Error(`invalid size ${size}`);
     if (size <= 0) throw new Error(`invalid size value ${size}`);
@@ -22,6 +23,7 @@ module.exports = class {
     this.size = size;
   }
 
+  // BigO(n) of the length of the key string to create a hash
   _hash(key) {
     if (typeof key !== 'string' || !key) throw new Error(`invalid key ${key}`);
 
@@ -31,6 +33,7 @@ module.exports = class {
     return hash % this.size;
   }
 
+  // BigO(1) to get an item
   get(key) {
     let hash = this._hash(key);
 
@@ -43,6 +46,7 @@ module.exports = class {
     return node ? node.value : null;
   }
 
+  // BigO(1) to set an item
   set(key, value) {
     let hash = this._hash(key);
 
@@ -60,6 +64,8 @@ module.exports = class {
     else this.bucket[hash].insert(new HashNode(key, value));
   }
 
+
+  // BigO(1) to remove an item
   remove(key) {
     let hash = this._hash(key);
 
