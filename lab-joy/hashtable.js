@@ -38,7 +38,7 @@ HashTable.prototype.remove = function(key) {
   if (!bucket) return null;
   let current = bucket.head;
   if (!current.next) {
-    bucket = undefined;
+    this.buckets[this.hash(key)] = undefined;
     return;
   }
   while (current.next) {
