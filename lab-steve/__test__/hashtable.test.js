@@ -148,6 +148,16 @@ describe('HashTable', () => {
         expect(ht.bucket[0].head.next.next.value.key).toEqual('name');
         expect(ht.bucket[0].head.next.next.value.value).toEqual('Dave Thomas');
       });
+
+      it('should be able to update a value to avoid duplicates', () => {
+        let ht = new HashTable(1);
+        ht.set('name', 'Dave Thomas');
+        expect(ht.bucket[0].head.value.key).toEqual('name');
+        expect(ht.bucket[0].head.value.value).toEqual('Dave Thomas');
+        ht.set('name', 'Steve');
+        expect(ht.bucket[0].head.value.key).toEqual('name');
+        expect(ht.bucket[0].head.value.value).toEqual('Steve');
+      });
     });
 
     describe('Invalid', () => {
@@ -165,14 +175,35 @@ describe('HashTable', () => {
 
   describe('#remove', () => {
     describe('Valid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('should properly remove the item from the hashtable', () => {
+        let ht = new HashTable();
+        ht.set('car', 'ferrari');
+        ht.remove('car');
+        expect(ht.get('car')).toBeNull();
       });
     });
 
     describe('Invalid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('should silently fail when attempting to remove a key that does not exist in an empty HT', () => {
+        let ht = new HashTable();
+        expect(() => ht.remove('foo')).not.toThrow();
+      });
+
+      it('should silently fail when attempting to remove a key that does not exist in a populated HT', () => {
+        let ht = new HashTable();
+        ht.set('foo', 'bar');
+        ht.set('bash', 'baz');
+        expect(() => ht.remove('xyz')).not.toThrow();
+      });
+
+      it('should throw an error if the key is a non-string', () => {
+        let ht = new HashTable();
+        expect(() => ht.remove(0)).toThrow('invalid key 0');
+      });
+
+      it('should throw an error if the key is an empty string', () => {
+        let ht = new HashTable();
+        expect(() => ht.remove('')).toThrow('invalid key');
       });
     });
   });
