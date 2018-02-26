@@ -20,6 +20,23 @@ class SLL {
     return this;
   }
 
+  // BigO(n) to find a node
+  // Search all nodes applying the callback check and return the value if found
+  // otherwise, return null
+  find(checkCallback) {
+    if (!this.length) return null;
+    if (!checkCallback || typeof checkCallback !== 'function')
+      throw new TypeError(`${checkCallback} is not a function`);
+
+    for (let itr = this.head; itr; itr = itr.next) {
+      if (checkCallback(itr.value)) {
+        return itr.value;
+      }
+    }
+
+    return null;
+  }
+
   // BigO(n) to find and remove the node
   // checkCallback returns true if the node matches what should be removed
   remove(checkCallback) {
