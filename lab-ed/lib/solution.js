@@ -27,8 +27,11 @@ solution.set = function(key, value) {
   let index = solution.hash(key)
   if (!hashTable.buckets[index]) {
     hashTable.buckets[index] = new Node(key, value)
-    return hashTable
+  } else {
+    for (var itr = hashTable.buckets[index]; itr.next; itr = itr.hashTable.buckets[index].next)
+      ;itr.next = new Node(key, value)
   }
+  return hashTable
 }
 
 solution.get = function(key) {
@@ -42,6 +45,10 @@ solution.get = function(key) {
   }
 }
 
-// solution.remove = function(key) {
-//   // removes the dll node node containing the key
-// }
+solution.remove = function(key) {
+  // removes the sll node node containing the key
+  let index = solution.hash(key)
+  if (!hashTable.buckets[index]) return null
+  
+  let node = hashTable.buckets[index]
+}
