@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "test": "__test__"
   },
   "scripts": {
     "test": "jest -i --verbose"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "jest": "^22.4.2"
   }
