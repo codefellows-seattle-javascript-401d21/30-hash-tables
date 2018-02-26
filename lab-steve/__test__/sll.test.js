@@ -50,7 +50,7 @@ describe('SLL Module', () => {
 
         list.insert('a string');
         list.insert(100);
-        list.insert({key: 'myobject'});
+        list.insert({ key: 'myobject' });
         list.insert(['one', 'two', 'three']);
 
         expect(list.length).toEqual(4);
@@ -67,6 +67,62 @@ describe('SLL Module', () => {
         expect(list.insert(null).length).toBe(0);
         expect(list.insert(undefined).length).toBe(0);
         expect(list.insert(NaN).length).toBe(0);
+      });
+    });
+  });
+
+  describe('#find', () => {
+    describe('Valid', () => {
+      let list = new SLL();
+      list.insert({ key: 5, value: 'five' });
+      list.insert({ key: 4, value: 'four' });
+      list.insert({ key: 3, value: 'three' });
+      list.insert({ key: 2, value: 'two' });
+      list.insert({ key: 1, value: 'one' });
+
+      it('should properly return back the last item in the list', () => {
+        let result = list.find(value => value.key === 5);
+        expect(result.value).toEqual('five');
+      });
+
+      it('should properly return back the first item in the list', () => {
+        let result = list.find(value => value.key === 1);
+        expect(result.value).toEqual('one');
+      });
+
+      it('should properly return back an item in the middle of the list', () => {
+        let result = list.find(value => value.key === 3);
+        expect(result.value).toEqual('three');
+      });
+    });
+
+    describe('Invalid', () => {
+      it('should return null if find is called on an empty list', () => {
+        let list = new SLL();
+        expect(list.find(item => item === 0)).toBe(null);
+      });
+
+      it('should return null if the item to be found does not exist', () => {
+        let list = new SLL();
+        list.insert(10);
+        list.insert(20);
+        list.insert(30);
+
+        expect(list.find(item => item === 100)).toEqual(null);
+      });
+
+      it('should throw a TypeError if a callback was not provided', () => {
+        let list = new SLL();
+        list.insert({ key: 'yay', value: 'oooo' });
+        expect(() => list.find()).toThrow('undefined is not a function');
+      });
+
+      it('should throw a TypeError if the callback is not a function', () => {
+        let list = new SLL();
+        list.insert({ key: 'yay', value: 'oooo' });
+        expect(() => list.find('fakecallback')).toThrow(
+          'fakecallback is not a function'
+        );
       });
     });
   });
@@ -122,7 +178,7 @@ describe('SLL Module', () => {
     describe('Invalid', () => {
       it('should return null if remove is called on an empty list', () => {
         let list = new SLL();
-        expect(list.remove(node => node.value === 0)).toBe(null);
+        expect(list.remove(item => item === 0)).toBe(null);
       });
 
       it('should return null if the item to be removed does not exist', () => {
