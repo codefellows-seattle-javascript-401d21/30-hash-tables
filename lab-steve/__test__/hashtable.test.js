@@ -2,6 +2,7 @@
 
 require('jest');
 const HashTable = require('../lib/hashtable');
+const SLL = require('../lib/sll');
 
 describe('HashTable', () => {
   describe('#constructor', () => {
@@ -86,14 +87,42 @@ describe('HashTable', () => {
 
   describe('#set', () => {
     describe('Valid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('should properly add an item to the hashtable', () => {
+        let ht = new HashTable(1);
+        ht.set('name', 'Dave Thomas');
+        expect(ht.bucket[0].head.value.key).toEqual('name');
+        expect(ht.bucket[0].head.value.value).toEqual('Dave Thomas');
+      });
+
+      it('should properly allocate a new SLL inside an empty bucket', () => {
+        let ht = new HashTable(1);
+        ht.set('name', 'Dave Thomas');
+        expect(ht.bucket[0]).toBeInstanceOf(SLL);
+      });
+
+      it('should continue adding to the SLL inside the bucket', () => {
+        let ht = new HashTable(1);
+        ht.set('name', 'Dave Thomas');
+        ht.set('age', 69);
+        ht.set('deceased', true);
+        expect(ht.bucket[0].head.value.key).toEqual('deceased');
+        expect(ht.bucket[0].head.value.value).toEqual(true);
+        expect(ht.bucket[0].head.next.value.key).toEqual('age');
+        expect(ht.bucket[0].head.next.value.value).toEqual(69);
+        expect(ht.bucket[0].head.next.next.value.key).toEqual('name');
+        expect(ht.bucket[0].head.next.next.value.value).toEqual('Dave Thomas');
       });
     });
 
     describe('Invalid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('should throw an error if the key is a non-string', () => {
+        let ht = new HashTable(1);
+        expect(() => ht.set(0, 'Jim')).toThrow('invalid key 0');
+      });
+
+      it('should throw an error if the key is an empty string', () => {
+        let ht = new HashTable(1);
+        expect(() => ht.set('', 'Jim')).toThrow('invalid key');
       });
     });
   });
