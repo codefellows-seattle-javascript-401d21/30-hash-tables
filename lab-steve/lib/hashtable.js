@@ -1,6 +1,6 @@
 'use strict';
 
-class Pair {
+class HashNode {
   constructor(key, value) {
     if (!key || typeof key !== 'string') throw new Error(`invalid key ${key}`);
 
@@ -9,7 +9,7 @@ class Pair {
   }
 }
 
-// Hashtable implementation
+// Hash table implementation
 module.exports = class {
   constructor(size = 1024) {
     if (typeof size !== 'number')
@@ -21,7 +21,14 @@ module.exports = class {
     this.size = size;
   }
 
-  _hash(key) {}
+  _hash(key) {
+    if (typeof key !== 'string' || !key) throw new Error(`invalid key ${key}`);
+
+    let hash = key.split('').reduce((acc, cur) => acc + cur.charCodeAt(0), 0);
+
+    // return a bucket index
+    return hash % this.size;
+  }
 
   get(key) {}
 
