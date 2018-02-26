@@ -14,8 +14,7 @@ class HashNode {
 // Hash table implementation
 module.exports = class {
   constructor(size = 1024) {
-    if (typeof size !== 'number')
-      throw new Error(`invalid size ${size}`);
+    if (typeof size !== 'number') throw new Error(`invalid size ${size}`);
     if (size <= 0) throw new Error(`invalid size value ${size}`);
 
     // Allocate storage
@@ -36,13 +35,11 @@ module.exports = class {
     let hash = this._hash(key);
 
     // The bucket doesn't even exist
-    if (!this.bucket[hash])
-      return null;
+    if (!this.bucket[hash]) return null;
 
     // A bucket exists, see if the HashNode can be found
     let node = this.bucket[hash].find(item => item.key === key);
 
-    // If the node was found, return the value, otherwise null
     return node ? node.value : null;
   }
 
@@ -50,11 +47,26 @@ module.exports = class {
     let hash = this._hash(key);
 
     // conditionally create a new sll
-    if (!this.bucket[hash])
-      this.bucket[hash] = new SLL();
+    if (!this.bucket[hash]) this.bucket[hash] = new SLL();
 
-    this.bucket[hash].insert(new HashNode(key, value));
+    // If the item is already in the hashtable, update its value (NO DUPES)
+    let node = null;
+    if (this.bucket[hash].length) {
+      node = this.bucket[hash].find(item => item.key === key);
+    }
+
+    // Either update the existing node or add a new one
+    if (node) node.value = value;
+    else this.bucket[hash].insert(new HashNode(key, value));
   }
 
-  remove(key) {}
+  remove(key) {
+    let hash = this._hash(key);
+
+    // Nothing to do
+    if (!this.bucket[hash]) return;
+
+    // See if a matching key can be removed from the SLL bucket
+    this.bucket[hash].remove(item => item.key === key);
+  }
 };
