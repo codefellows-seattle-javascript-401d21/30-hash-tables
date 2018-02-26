@@ -1,7 +1,7 @@
 {
-  "name": "Hash Tables Lab",
+  "name": "lab-liza",
   "version": "1.0.0",
-  "description": "",
+  "description": "hash table lab",
   "main": "index.js",
   "directories": {
     "lib": "lib"

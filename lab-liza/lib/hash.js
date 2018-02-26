@@ -26,3 +26,18 @@ HashTable.prototype.set = function(key, val) {
   else this.memory[hash].insert(new HashTable(key, val));
 };
 
+HashTable.prototype.get = function(key) {
+  let hash = this.hashKey(key);
+
+  if (!this.memory[hash]) return null;
+
+  let node = this.memory[hash].find(ele => ele.key === key);
+
+  return node ? node.val : null;
+};
+
+HashTable.prototype.remove = function(key) {
+  let address = this.hashKey(key);
+
+  return this.memory[address] ? delete this.memory[address] : new Error('Invalid Key.');
+};
