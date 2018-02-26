@@ -73,14 +73,50 @@ describe('HashTable', () => {
 
   describe('#get', () => {
     describe('Valid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      let ht = new HashTable(1);
+      ht.set('name', 'Steve');
+
+      it('should return the requested value when it is found', () => {
+        expect(ht.get('name')).toEqual('Steve');
+      });
+
+      it('should still find items when there are several in a single bucket', () => {
+        ht.set('age', 22);
+        ht.set('hobby', 'mechanical keyboards');
+        ht.set('alive', true);
+
+        expect(ht.get('age')).toEqual(22);
+      });
+
+      it('should work when the items are spread through many buckets', () => {
+        let ht2 = new HashTable();
+
+        ht2.set('car', 'ferrari');
+        ht2.set('year', 2018);
+        ht2.set('model', '360 corsa');
+        ht2.set('topspeed', 250);
+
+        expect(ht2.get('car')).toEqual('ferrari');
+        expect(ht2.get('year')).toEqual(2018);
+        expect(ht2.get('model')).toEqual('360 corsa');
+        expect(ht2.get('topspeed')).toEqual(250);
       });
     });
 
     describe('Invalid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('should return null when no item exists', () => {
+        let ht = new HashTable();
+        expect(ht.get('name')).toBeNull();
+      });
+
+      it('should throw an error if the key is a non-string', () => {
+        let ht = new HashTable();
+        expect(() => ht.get(0)).toThrow('invalid key 0');
+      });
+
+      it('should throw an error if the key is an empty string', () => {
+        let ht = new HashTable();
+        expect(() => ht.set('')).toThrow('invalid key');
       });
     });
   });
