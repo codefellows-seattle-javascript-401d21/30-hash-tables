@@ -37,7 +37,9 @@ HashTable.prototype.get = function(key) {
 };
 
 HashTable.prototype.remove = function(key) {
-  let address = this.hashKey(key);
+  let hash = this.hashKey(key);
 
-  return this.memory[address] ? delete this.memory[address] : new Error('Invalid Key.');
+  if (!this.memory[hash]) return;
+
+  return this.memory[hash] ? delete this.memory[hash] : new Error('Invalid Key.');
 };

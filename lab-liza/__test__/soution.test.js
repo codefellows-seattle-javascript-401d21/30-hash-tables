@@ -5,19 +5,15 @@ const SLL = require('../lib/sll');
 require('jest');
 
 describe('HashTable', () => {
-  describe('#hashtable', () => {
-    it('should return with a new instance of the hashtable', () => {
-      expect(new HashTable()).toBeInstanceOf(HashTable);
-    });
-
-    it('should have a default size of 1024', () => {
-      let hashTest = new HashTable();
-      expect(hashTest.size).toEqual(1024);
-    });
+  it('should return with a new instance of the hashtable', () => {
+    expect(new HashTable()).toBeInstanceOf(HashTable);
   });
-});
 
-describe('#hashKey', () => {
+  it('should have a default size of 1024', () => {
+    let hashTest = new HashTable();
+    expect(hashTest.size).toEqual(1024);
+  });
+
   it('should return a numerical value', () => {
     let hashTest = new HashTable(99);
     let hash = hashTest.hashKey('foo');
@@ -36,5 +32,10 @@ describe('#hashKey', () => {
     let hash = hashTest.hashKey('foo');
     let hash2 = hashTest.hashKey('foo');
     expect(hash).toEqual(hash2);
+  });
+
+  it('should return null when no ele exists', () => {
+    let hashTest = new HashTable();
+    expect(hashTest.get('test')).toBe(null);
   });
 });
