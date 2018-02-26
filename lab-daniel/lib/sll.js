@@ -10,7 +10,7 @@ class SLL {
     // Big O Notation: O(1) All Cases
   }
   insertHead(key, val) {
-    let nd = new Nd(val);
+    let nd = new Nd(key, val);
     nd.next = this.head;
     this.head = nd;
     this.lLen++;
@@ -93,9 +93,8 @@ class SLL {
   findNodeByVal(key) {
     if (!key) return null;
     let node = this.head;
-    for(let i = 1; node.next; i++) {
+    for(let i = 1; node; i++) {
       if (node.key === key) return i;
-      console.log(node);
       node = node.next;
     } 
     return 0; // Big O Notation: O(n) All Cases
