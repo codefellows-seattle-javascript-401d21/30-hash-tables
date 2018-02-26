@@ -28,11 +28,8 @@ solution.set = function(key, value) {
   if (!hashTable.buckets[index]) {
     hashTable.buckets[index] = new Node(key, value)
   } else {
-    let node = hashTable.buckets[index]
-    while (node.next) {
-      console.log(node)
-    }
-    hashTable.buckets[index].next = new Node(key, value) 
+    for (var itr = hashTable.buckets[index]; itr.next; itr = itr.hashTable.buckets[index].next)
+      ;itr.next = new Node(key, value)
   }
   return hashTable
 }
