@@ -36,14 +36,36 @@ describe('HashTable', () => {
 
   describe('#_hash', () => {
     describe('Valid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('will return an index from 0 to the HashTable size', () => {
+        let ht = new HashTable(10);
+        let hash = ht._hash('test string');
+        expect(hash).toBeGreaterThanOrEqual(0);
+        expect(hash).toBeLessThan(10);
+      });
+
+      it('will return an integer value', () => {
+        let ht = new HashTable(10);
+        let hash = ht._hash('test string');
+        expect(typeof hash === 'number').toBeTruthy();
+      });
+
+      it('should return the same hash value if called using the same key', () => {
+        let ht = new HashTable(10);
+        let hash = ht._hash('test string');
+        let hash2 = ht._hash('test string');
+        expect(hash).toEqual(hash2);
       });
     });
 
     describe('Invalid', () => {
-      it('should be truthy', () => {
-        expect(true).toBeTruthy();
+      it('should throw an error if the key is not a string', () => {
+        let ht = new HashTable();
+        expect(() => ht._hash(1000)).toThrow('invalid key 1000');
+      });
+
+      it('should throw an error if the key is falsey', () => {
+        let ht = new HashTable();
+        expect(() => ht._hash('')).toThrow('invalid key');
       });
     });
   });
