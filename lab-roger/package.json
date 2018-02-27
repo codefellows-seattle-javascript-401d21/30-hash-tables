@@ -1,0 +1,19 @@
+{
+  "name": "lab-roger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__test__"
+  },
+  "scripts": {
+    "test": "jest -i --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.4.2"
+  }
+}
