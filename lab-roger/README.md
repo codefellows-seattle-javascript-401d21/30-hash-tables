@@ -26,24 +26,28 @@ or
 let testHashTable = new hashTable(512);
 ```
 
-##hashKey
+##hashKey BigO: O(1).
 
 This will generate the hash value from the key that is passed. It will return errors if the key is missing or not a string value. 
-```testHashTable.hashKey('string');```
+```
+testHashTable.hashKey('string');
+```
 
-##Set method
+##Set method BigO: O(1).
 
 This will take a key and a value. It will set the value and the key in the correct hash sll.
-```testHashTable.set(key, value);```
+```
+testHashTable.set(key, value);
+```
 
-##Get method
+##Get method BigO: O(1+n).
 
 This will return the value associated with the key passed to it. If the key is not in the hash table it will return null.
 ```
 testHashTable.get(key);
 ```
 
-##Remove method
+##Remove method BigO: O(1+n)
 
 This will remove the node that holds the key and value. It will return a message if the key is not found.
 ```
