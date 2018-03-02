@@ -1,0 +1,24 @@
+{
+  "name": "30-hash-tables",
+  "version": "1.0.0",
+  "description": "30-hash-tables",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/montgomeryrd/30-hash-tables.git"
+  },
+  "author": "Richard Montgomery",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/montgomeryrd/30-hash-tables/issues"
+  },
+  "homepage": "https://github.com/montgomeryrd/30-hash-tables#readme",
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "^22.4.2"
+  }
+}
