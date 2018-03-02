@@ -26,15 +26,9 @@ describe ('HashTable', () => {
     describe('Valid Input', () => {
         it('should return expected', () => {
 
-            /*Maybe you can tell me why my expected results aren't passing.
-            When I console.log, I get what I expect. Results just don't pass.*/
-
-            console.log(hashTable.get('Sejuani'));
-            // expected(hashTable.get('Sejuani')).toEqual('key: Sejuani, value: Tank');
-            console.log(hashTable.get('Miss Fortune'));
-            // expected(hashTable.get('Miss Fortune')).toEqual('key: Miss Fortune, value: Fighter');
-            console.log(hashTable.get('Teemo'));
-            // expected(hashTable.get('Teemo')).toEqual('key: Teemo, value: Bastard');
+            expect(hashTable.get('Sejuani')).toEqual('Value: Tank');
+            expect(hashTable.get('Miss Fortune')).toEqual('Value: Fighter');
+            expect(hashTable.get('Teemo')).toEqual('Value: Bastard');
         });
     });
 });

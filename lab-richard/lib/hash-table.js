@@ -36,7 +36,7 @@ class HashTable {
             let current = this.bucket[hash].head;
 
             while(current) {
-                if(current.key === key) return `key: ${current.key}, value: ${current.value}`;
+                if(current.key === key) return `Value: ${current.value}`;
                 current = current.next;
             }
         }
