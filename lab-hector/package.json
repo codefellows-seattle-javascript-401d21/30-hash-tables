@@ -1,0 +1,23 @@
+{
+  "name": "30-hash-tables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzytag/30-hash-tables.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nzytag/30-hash-tables/issues"
+  },
+  "homepage": "https://github.com/nzytag/30-hash-tables#readme",
+  "devDependencies": {
+    "jest": "^22.4.2"
+  }
+}
