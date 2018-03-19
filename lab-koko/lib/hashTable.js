@@ -7,7 +7,7 @@ class HashTable {
     this.bucket = [...Array(this.size)];
     this.size = size;
   }
-  hash(key){
+  hashKey(key){
     if(!key) return new Error('Error: Requires a Key');
     if(typeof key !== 'string') return new Error ('Type Error: Key must be a \'string\'');
     let hash = key.split('').reduce((a,b) => a + b.charCodeAt(0), 0) % this.size;
