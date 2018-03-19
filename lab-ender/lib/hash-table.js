@@ -37,7 +37,7 @@ class HashTable {
     return true;
   };
 
-  get = function(key) {
+  get(key) {
     if (!key) return new Error('Type Error: key required.');
 
     if(!this.memory[this.hashKey(key)]) return new Error('Get Error: Bucket does not exist');
@@ -55,7 +55,7 @@ class HashTable {
     return new Error('Get Error: Key does not exist.');
   };
 
-  remove = function(key) {
+  remove(key) {
     if (!key) return new Error('Type Error: key required.');
 
     if(!this.memory[this.hashKey(key)]) return new Error('Remove Error: Bucket does not exist');
@@ -78,6 +78,6 @@ class HashTable {
     // if no key found return error
     return new Error('Remove Error: key does not exist');
   };
-}
+};
 
 module.exports = HashTable;
